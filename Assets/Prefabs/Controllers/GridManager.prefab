@@ -45,7 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mud: {fileID: 7829880687961869578, guid: 1571be27946ad9d4ea7a58383d67c44a, type: 3}
+  nut: {fileID: 1395236210687233033, guid: 11af7f663bee9b74c968bbfd30410d51, type: 3}
   grass: {fileID: 277907894331117718, guid: 3c7f7c2e485d6634f8f95d89cb8300a6, type: 3}
   size: 8
+  spawnCount: 32
   padding: 0.2
   selectedTile: {fileID: 0}
