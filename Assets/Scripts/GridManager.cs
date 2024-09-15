@@ -23,7 +23,7 @@ public class GridManager : MonoBehaviour
 
     void GenerateGridLayer(GameObject tile)
     {
-        Vector2 offset = (Vector2.one * size / 2f) - new Vector2(0.5f, 0.5f);
+        Vector2 offset = (((Vector2.one * size) / 2f) + (Vector2.one * (size * padding)) / 2f) - new Vector2(0.5f, 0.5f);
         Debug.Log(offset);
 
         for (int y = 0; y < size; y++)
@@ -37,5 +37,28 @@ public class GridManager : MonoBehaviour
                 currentTile.coordinates = new Vector2(x, y);
             }
         }
+    }
+
+    Tile ReturnTile(int xPos, int yPos)
+    {
+        Tile tile = new Tile();
+        int count = 0;
+
+        for (int y = 0; y < size; y++)
+        {
+            for (int x = 0; x < size; x++)
+            {
+                if (yPos == y && xPos == x)
+                {
+
+
+                    return tile;
+                }
+
+                count++;
+            }
+        }
+
+        return null;
     }
 }
