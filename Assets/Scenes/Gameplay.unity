@@ -270,7 +270,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2324361245415321367, guid: 92e90ae8f2af9a4489b8d204ff0e6975, type: 3}
       propertyPath: m_Name
-      value: GridManager
+      value: Grid
       objectReference: {fileID: 0}
     - target: {fileID: 5476936406524230737, guid: 92e90ae8f2af9a4489b8d204ff0e6975, type: 3}
       propertyPath: m_LocalPosition.x

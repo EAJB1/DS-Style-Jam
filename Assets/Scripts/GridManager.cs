@@ -8,12 +8,15 @@ public class GridManager : MonoBehaviour
 
     [Space]
 
-    [SerializeField] int size, spawnCount;
+    [SerializeField] int size;
     [SerializeField] float padding;
+    
+    [SerializeField] float spawnPercent;
+    int spawnCount;
 
     [Space]
 
-    public Transform selectedTile;
+    [HideInInspector] public Transform selectedTile;
 
     bool[] canSpawn;
 
@@ -29,13 +32,12 @@ public class GridManager : MonoBehaviour
         GenerateRandomPositions();
         GenerateGridLayer(nut, true);
 
-        //GenerateGridLayer(grass, false);
+        GenerateGridLayer(grass, false);
     }
 
     void GenerateGridLayer(GameObject tile, bool isNut)
     {
         Vector2 offset = (((Vector2.one * size) / 2f) + (Vector2.one * (size * padding)) / 2f) - new Vector2(0.5f, 0.5f);
-        Debug.Log(offset);
 
         int index = 0;
 
@@ -43,12 +45,13 @@ public class GridManager : MonoBehaviour
         {
             for (int x = 0; x < size; x++)
             {
-                Vector2 position = new Vector2(x, y) * (1f + padding) - offset;
-
                 if (isNut && !canSpawn[index])
                 {
+                    index++;
                     continue;
                 }
+
+                Vector2 position = new Vector2(x, y) * (1f + padding) - offset;
 
                 Tile currentTile = Instantiate(tile, position, Quaternion.identity).GetComponent<Tile>();
                 currentTile.transform.parent = transform;
@@ -62,16 +65,21 @@ public class GridManager : MonoBehaviour
     void GenerateRandomPositions()
     {
         canSpawn = new bool[size * size];
-        int count = spawnCount;
+        spawnCount = (int)(canSpawn.Length * spawnPercent);
 
-        for (int i = 0; i < canSpawn.Length; i++)
+        while (spawnCount > 0)
         {
-            int rnd = Random.Range(0, 1);
-
-            if (count > 0 /*&& rnd == 0*/)
+            for (int i = 0; i < canSpawn.Length; i++)
             {
-                canSpawn[i] = true;
-                count--;
+                if (spawnCount == 0) { break; }
+
+                float rnd = Random.Range(0, 99) / 100f;
+
+                if (rnd < spawnPercent && !canSpawn[i])
+                {
+                    canSpawn[i] = true;
+                    spawnCount--;
+                }
             }
         }
     }

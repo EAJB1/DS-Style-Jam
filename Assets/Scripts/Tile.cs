@@ -8,16 +8,16 @@ public class Tile : MonoBehaviour
     public Image image;
     public Vector2 coordinates;
 
-    GridManager gridManager;
+    GridManager grid;
 
     private void Start()
     {
-        gridManager = GetComponentInParent<GridManager>();
+        grid = GetComponentInParent<GridManager>();
     }
 
     private void OnMouseDown()
     {
-        gridManager.selectedTile = transform;
+        grid.selectedTile = transform;
         gameObject.SetActive(false);
     }
 }

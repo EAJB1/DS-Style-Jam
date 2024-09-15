@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5476936406524230737}
-  - component: {fileID: 7420207395451737616}
+  - component: {fileID: 2398629908482092897}
   m_Layer: 0
-  m_Name: GridManager
+  m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7420207395451737616
+--- !u!114 &2398629908482092897
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,6 +48,6 @@ MonoBehaviour:
   nut: {fileID: 1395236210687233033, guid: 11af7f663bee9b74c968bbfd30410d51, type: 3}
   grass: {fileID: 277907894331117718, guid: 3c7f7c2e485d6634f8f95d89cb8300a6, type: 3}
   size: 8
-  spawnCount: 32
   padding: 0.2
+  spawnPercent: 0.25
   selectedTile: {fileID: 0}
