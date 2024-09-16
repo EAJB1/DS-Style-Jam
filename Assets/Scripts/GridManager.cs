@@ -10,15 +10,16 @@ public class GridManager : MonoBehaviour
 
     [SerializeField] int size;
     [SerializeField] float padding;
-    
     [SerializeField] float spawnPercent;
     int spawnCount;
+    [SerializeField] float previewTime;
+    [SerializeField] float transitionTime;
 
-    [Space]
-
-    [HideInInspector] public Transform selectedTile;
+    [HideInInspector] public Tile selectedTile;
+    [HideInInspector] public int tilesFound;
 
     bool[] canSpawn;
+    List<Tile> mudGrid, nutGrid, grassGrid;
 
     void Start()
     {
@@ -27,16 +28,43 @@ public class GridManager : MonoBehaviour
 
     void InitGrid()
     {
-        GenerateGridLayer(mud, false);
+        if (transform.childCount > 0)
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                Destroy(transform.GetChild(i).gameObject);
+            }
+        }
+
+        tilesFound = 0;
+
+        mudGrid = GenerateGridLayer(mud, false);
 
         GenerateRandomPositions();
-        GenerateGridLayer(nut, true);
+        nutGrid = GenerateGridLayer(nut, true);
 
-        GenerateGridLayer(grass, false);
+        grassGrid = GenerateGridLayer(grass, false);
+
+        ShowGrid(mudGrid);
+        ShowGrid(nutGrid);
+        ShowGrid(grassGrid);
+
+        StartCoroutine(GridPreview(grassGrid));
     }
 
-    void GenerateGridLayer(GameObject tile, bool isNut)
+    public void CheckGameState()
     {
+        if (tilesFound == (int)(canSpawn.Length * spawnPercent))
+        {
+            size++;
+            StartCoroutine(GridTransition(grassGrid));
+        }
+    }
+
+    List<Tile> GenerateGridLayer(GameObject tile, bool isNut)
+    {
+        List<Tile> tempGrid = new List<Tile>(size * size);
+
         Vector2 offset = (((Vector2.one * size) / 2f) + (Vector2.one * (size * padding)) / 2f) - new Vector2(0.5f, 0.5f);
 
         int index = 0;
@@ -57,9 +85,13 @@ public class GridManager : MonoBehaviour
                 currentTile.transform.parent = transform;
                 currentTile.coordinates = new Vector2(x, y);
 
+                tempGrid.Add(currentTile);
+
                 index++;
             }
         }
+
+        return tempGrid;
     }
 
     void GenerateRandomPositions()
@@ -84,23 +116,54 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    Tile ReturnTile(int xPos, int yPos)
+    IEnumerator GridPreview(List<Tile> grid)
     {
-        Tile tile = new Tile();
-        int count = 0;
+        HideGrid(grid);
 
-        for (int y = 0; y < size; y++)
+        yield return new WaitForSeconds(previewTime);
+        
+        ShowGrid(grid);
+    }
+
+    IEnumerator GridTransition(List<Tile> grid)
+    {
+        ShowGrid(grid);
+
+        yield return new WaitForSeconds(transitionTime);
+
+        InitGrid();
+    }
+
+
+    void HideGrid(List<Tile> grid)
+    {
+        foreach (Tile tile in grid)
         {
-            for (int x = 0; x < size; x++)
+            tile.gameObject.SetActive(false);
+        }
+    }
+
+    void ShowGrid(List<Tile> grid)
+    {
+        foreach (Tile tile in grid)
+        {
+            tile.gameObject.SetActive(true);
+        }
+    }
+
+    Tile ReturnSelectedTile(Tile tile)
+    {
+        return tile;
+    }
+
+    Tile ReturnTileAtPosition(List<Tile> grid, Vector2 position)
+    {
+        for (int i = 0; i < grid.Count; i++)
+        {
+            if (grid[i].coordinates.x == position.x &&
+                grid[i].coordinates.y == position.y)
             {
-                if (yPos == y && xPos == x)
-                {
-
-
-                    return tile;
-                }
-
-                count++;
+                return grid[i];
             }
         }
 

@@ -17,7 +17,10 @@ public class Tile : MonoBehaviour
 
     private void OnMouseDown()
     {
-        grid.selectedTile = transform;
+        //grid.selectedTile = transform.GetComponent<Tile>();
+        grid.tilesFound++;
         gameObject.SetActive(false);
+
+        grid.CheckGameState();
     }
 }
