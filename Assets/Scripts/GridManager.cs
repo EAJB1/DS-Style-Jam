@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GridManager : MonoBehaviour
 {
@@ -15,19 +16,56 @@ public class GridManager : MonoBehaviour
     [SerializeField] float previewTime;
     [SerializeField] float transitionTime;
 
-    [HideInInspector] public Tile selectedTile;
-    [HideInInspector] public int tilesFound;
+    [Space]
 
+    [SerializeField] int startLives;
+    int currentLives;
+
+    [HideInInspector] public Tile selectedTile;
+    
     bool[] canSpawn;
     List<Tile> mudGrid, nutGrid, grassGrid;
+    int tilesFound;
 
     void Start()
     {
         InitGrid();
     }
 
+    public void CheckGameState(Tile tile)
+    {
+        int bankedTilesFound = tilesFound;
+
+        for (int i = 0; i < nutGrid.Count; i++)
+        {
+            if (tile.coordinates.x == nutGrid[i].coordinates.x &&
+                tile.coordinates.y == nutGrid[i].coordinates.y)
+            {
+                tilesFound++;
+            }
+        }
+
+        if (bankedTilesFound == tilesFound)
+        {
+            currentLives--;
+
+            if (currentLives == 0)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+        }
+
+        if (tilesFound == (int)(canSpawn.Length * spawnPercent))
+        {
+            size++;
+            StartCoroutine(GridTransition(grassGrid));
+        }
+    }
+
     void InitGrid()
     {
+        currentLives = startLives;
+
         if (transform.childCount > 0)
         {
             for (int i = 0; i < transform.childCount; i++)
@@ -50,15 +88,6 @@ public class GridManager : MonoBehaviour
         ShowGrid(grassGrid);
 
         StartCoroutine(GridPreview(grassGrid));
-    }
-
-    public void CheckGameState()
-    {
-        if (tilesFound == (int)(canSpawn.Length * spawnPercent))
-        {
-            size++;
-            StartCoroutine(GridTransition(grassGrid));
-        }
     }
 
     List<Tile> GenerateGridLayer(GameObject tile, bool isNut)
