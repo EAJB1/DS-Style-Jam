@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78f5801058016fa44b41d6fd7ec5a2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mud: {fileID: 7829880687961869578, guid: 1571be27946ad9d4ea7a58383d67c44a, type: 3}
-  nut: {fileID: 1395236210687233033, guid: 11af7f663bee9b74c968bbfd30410d51, type: 3}
-  grass: {fileID: 277907894331117718, guid: 3c7f7c2e485d6634f8f95d89cb8300a6, type: 3}
+  mud: {fileID: 2588733139889987332, guid: 0c047db9458a65348a1472955b4cb35d, type: 3}
+  nut: {fileID: 5090022337117832273, guid: 45b80132575ddef4499a2e0487dbcc79, type: 3}
+  grass: {fileID: 3702270829505132192, guid: 3c7f7c2e485d6634f8f95d89cb8300a6, type: 3}
   size: 8
   padding: 0.2
   spawnPercent: 0.25

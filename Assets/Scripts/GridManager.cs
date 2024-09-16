@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GridManager : MonoBehaviour
 {
-    [SerializeField] GameObject mud, nut, grass;
+    [SerializeField] Tile mud, nut, grass;
 
     [Space]
 
@@ -76,12 +76,12 @@ public class GridManager : MonoBehaviour
 
         tilesFound = 0;
 
-        mudGrid = GenerateGridLayer(mud, false);
+        mudGrid = GenerateGridLayer(mud.gameObject, false);
 
         GenerateRandomPositions();
-        nutGrid = GenerateGridLayer(nut, true);
+        nutGrid = GenerateGridLayer(nut.gameObject, true);
 
-        grassGrid = GenerateGridLayer(grass, false);
+        grassGrid = GenerateGridLayer(grass.gameObject, false);
 
         ShowGrid(mudGrid);
         ShowGrid(nutGrid);
