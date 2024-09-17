@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.27058825
       objectReference: {fileID: 0}
+    - target: {fileID: 5953027774168330428, guid: 1571be27946ad9d4ea7a58383d67c44a, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7829880687961869578, guid: 1571be27946ad9d4ea7a58383d67c44a, type: 3}
       propertyPath: m_Name
       value: Grass

@@ -5,13 +5,21 @@ using UnityEngine.UI;
 
 public class Tile : MonoBehaviour
 {
-    public Image image;
+    public Sprite image;
     public Vector2 coordinates;
 
+    SpriteRenderer sR;
     GridManager grid;
 
     private void Start()
     {
+        sR = GetComponent<SpriteRenderer>();
+
+        if (image != null)
+        {
+            sR.sprite = image;
+        }
+
         grid = GetComponentInParent<GridManager>();
     }
 

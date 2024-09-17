@@ -47,7 +47,7 @@ MonoBehaviour:
   mud: {fileID: 2588733139889987332, guid: 0c047db9458a65348a1472955b4cb35d, type: 3}
   nut: {fileID: 5090022337117832273, guid: 45b80132575ddef4499a2e0487dbcc79, type: 3}
   grass: {fileID: 3702270829505132192, guid: 3c7f7c2e485d6634f8f95d89cb8300a6, type: 3}
-  size: 8
+  startSize: 3
   padding: 0.2
   spawnPercent: 0.25
   previewTime: 2.5

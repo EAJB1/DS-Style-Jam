@@ -9,7 +9,8 @@ public class GridManager : MonoBehaviour
 
     [Space]
 
-    [SerializeField] int size;
+    [SerializeField] int startSize;
+    int size;
     [SerializeField] float padding;
     [SerializeField] float spawnPercent;
     int spawnCount;
@@ -19,7 +20,7 @@ public class GridManager : MonoBehaviour
     [Space]
 
     [SerializeField] int startLives;
-    int currentLives;
+    int lives;
 
     [HideInInspector] public Tile selectedTile;
     
@@ -29,6 +30,8 @@ public class GridManager : MonoBehaviour
 
     void Start()
     {
+        size = startSize;
+
         InitGrid();
     }
 
@@ -47,9 +50,9 @@ public class GridManager : MonoBehaviour
 
         if (bankedTilesFound == tilesFound)
         {
-            currentLives--;
+            lives--;
 
-            if (currentLives == 0)
+            if (lives == 0)
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
@@ -64,7 +67,7 @@ public class GridManager : MonoBehaviour
 
     void InitGrid()
     {
-        currentLives = startLives;
+        lives = startLives;
 
         if (transform.childCount > 0)
         {
@@ -108,7 +111,7 @@ public class GridManager : MonoBehaviour
                     continue;
                 }
 
-                Vector2 position = new Vector2(x, y) * (1f + padding) - offset;
+                Vector2 position = (Vector2)transform.position + new Vector2(x, y) * (1f + padding) - offset;
 
                 Tile currentTile = Instantiate(tile, position, Quaternion.identity).GetComponent<Tile>();
                 currentTile.transform.parent = transform;
@@ -156,6 +159,8 @@ public class GridManager : MonoBehaviour
 
     IEnumerator GridTransition(List<Tile> grid)
     {
+        yield return new WaitForSeconds(transitionTime / 2f);
+
         ShowGrid(grid);
 
         yield return new WaitForSeconds(transitionTime);
