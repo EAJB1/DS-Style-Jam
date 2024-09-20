@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GridManager : MonoBehaviour
 {
@@ -9,65 +8,28 @@ public class GridManager : MonoBehaviour
 
     [Space]
 
-    [SerializeField] int startSize;
-    int size;
     [SerializeField] float padding;
-    [SerializeField] float spawnPercent;
+    [HideInInspector] public int size;
     int spawnCount;
     [SerializeField] float previewTime;
     [SerializeField] float transitionTime;
 
     [Space]
 
-    [SerializeField] int startLives;
-    int lives;
+    public List<Tile> mudGrid, nutGrid, grassGrid;
 
-    [HideInInspector] public Tile selectedTile;
-    
+    [Space]
+
     bool[] canSpawn;
-    List<Tile> mudGrid, nutGrid, grassGrid;
-    int tilesFound;
 
-    void Start()
+    public int ReturnSpawnCount()
     {
-        size = startSize;
-
-        InitGrid();
+        return spawnCount;
     }
 
-    public void CheckGameState(Tile tile)
+    public void InitGrid()
     {
-        int bankedTilesFound = tilesFound;
-
-        for (int i = 0; i < nutGrid.Count; i++)
-        {
-            if (tile.coordinates.x == nutGrid[i].coordinates.x &&
-                tile.coordinates.y == nutGrid[i].coordinates.y)
-            {
-                tilesFound++;
-            }
-        }
-
-        if (bankedTilesFound == tilesFound)
-        {
-            lives--;
-
-            if (lives == 0)
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            }
-        }
-
-        if (tilesFound == (int)(canSpawn.Length * spawnPercent))
-        {
-            size++;
-            StartCoroutine(GridTransition(grassGrid));
-        }
-    }
-
-    void InitGrid()
-    {
-        lives = startLives;
+        GameMaster.I.lives = GameMaster.I.startLives;
 
         if (transform.childCount > 0)
         {
@@ -77,7 +39,7 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        tilesFound = 0;
+        GameMaster.I.tilesFound = 0;
 
         mudGrid = GenerateGridLayer(mud.gameObject, false);
 
@@ -91,6 +53,8 @@ public class GridManager : MonoBehaviour
         ShowGrid(grassGrid);
 
         StartCoroutine(GridPreview(grassGrid));
+
+        GameMaster.I.UpdateUI();
     }
 
     List<Tile> GenerateGridLayer(GameObject tile, bool isNut)
@@ -129,23 +93,37 @@ public class GridManager : MonoBehaviour
     void GenerateRandomPositions()
     {
         canSpawn = new bool[size * size];
-        spawnCount = (int)(canSpawn.Length * spawnPercent);
+        spawnCount = (int)(canSpawn.Length * GameMaster.I.spawnPercent);
+        int count = spawnCount;
 
-        while (spawnCount > 0)
+        while (count > 0)
         {
             for (int i = 0; i < canSpawn.Length; i++)
             {
-                if (spawnCount == 0) { break; }
+                if (count == 0) { break; }
 
                 float rnd = Random.Range(0, 99) / 100f;
 
-                if (rnd < spawnPercent && !canSpawn[i])
+                if (rnd < GameMaster.I.spawnPercent && !canSpawn[i])
                 {
                     canSpawn[i] = true;
-                    spawnCount--;
+                    count--;
                 }
             }
         }
+    }
+
+    public IEnumerator GridTransition(List<Tile> grid)
+    {
+        HideGrid(grid);
+
+        yield return new WaitForSeconds(transitionTime);
+
+        ShowGrid(grid);
+
+        yield return new WaitForSeconds(transitionTime);
+
+        InitGrid();
     }
 
     IEnumerator GridPreview(List<Tile> grid)
@@ -156,18 +134,6 @@ public class GridManager : MonoBehaviour
         
         ShowGrid(grid);
     }
-
-    IEnumerator GridTransition(List<Tile> grid)
-    {
-        yield return new WaitForSeconds(transitionTime / 2f);
-
-        ShowGrid(grid);
-
-        yield return new WaitForSeconds(transitionTime);
-
-        InitGrid();
-    }
-
 
     void HideGrid(List<Tile> grid)
     {
@@ -183,24 +149,5 @@ public class GridManager : MonoBehaviour
         {
             tile.gameObject.SetActive(true);
         }
-    }
-
-    Tile ReturnSelectedTile(Tile tile)
-    {
-        return tile;
-    }
-
-    Tile ReturnTileAtPosition(List<Tile> grid, Vector2 position)
-    {
-        for (int i = 0; i < grid.Count; i++)
-        {
-            if (grid[i].coordinates.x == position.x &&
-                grid[i].coordinates.y == position.y)
-            {
-                return grid[i];
-            }
-        }
-
-        return null;
     }
 }

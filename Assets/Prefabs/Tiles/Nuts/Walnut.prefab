@@ -16,6 +16,10 @@ PrefabInstance:
       propertyPath: image
       value: 
       objectReference: {fileID: 21300000, guid: 4eb9d8979ae886c4bafe68b6852246b7, type: 3}
+    - target: {fileID: 1629434763409258856, guid: 17271ef282240dc41b306eb7190894d6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4eb9d8979ae886c4bafe68b6852246b7, type: 3}
     - target: {fileID: 2929836133834589406, guid: 17271ef282240dc41b306eb7190894d6, type: 3}
       propertyPath: m_Name
       value: Walnut

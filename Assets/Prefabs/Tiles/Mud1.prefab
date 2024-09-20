@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &7115353388106358163
+--- !u!1001 &472122076245166510
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -51,14 +51,10 @@ PrefabInstance:
     - target: {fileID: 5953027774168330428, guid: 1571be27946ad9d4ea7a58383d67c44a, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: e7684ea1ffbb9b2458eb0c90d5dab6ac, type: 3}
-    - target: {fileID: 5953027774168330428, guid: 1571be27946ad9d4ea7a58383d67c44a, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 21300000, guid: 35acbb334cc6d164e99e6d9c8c4858e5, type: 3}
     - target: {fileID: 7829880687961869578, guid: 1571be27946ad9d4ea7a58383d67c44a, type: 3}
       propertyPath: m_Name
-      value: Mud
+      value: Mud1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
