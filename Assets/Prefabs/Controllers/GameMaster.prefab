@@ -45,6 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridM: {fileID: 0}
+  gameUI: {fileID: 0}
+  level: 1
+  subLevel: 1
+  maxSubLevel: 2
   startLives: 4
   lives: 0
   gridStartSize: 3

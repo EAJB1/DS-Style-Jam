@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,9 @@ public class GameMaster : MonoBehaviour
 
     [Space]
 
-    int level;
+    [SerializeField] int level;
+    [SerializeField] int subLevel;
+    [SerializeField] int maxSubLevel;
     public int startLives;
     [HideInInspector] public int lives;
     public int gridStartSize;
@@ -66,11 +69,16 @@ public class GameMaster : MonoBehaviour
     void NextLevel()
     {
         level++;
+        subLevel++;
 
+        if (subLevel > maxSubLevel)
+        {
+            subLevel = 1;
+            gridM.size++;
+        }
 
-
-        gridM.size++;
         StartCoroutine(gridM.GridTransition(gridM.grassGrid));
+
     }
 
     public void UpdateUI()
@@ -79,5 +87,9 @@ public class GameMaster : MonoBehaviour
         gameUI.SetAcornUI(tilesFound, gridM.ReturnSpawnCount());
 
         gameUI.SetLivesUI(lives);
+
+        gameUI.SetLevelUI(level);
+
+        gameUI.SetSubLevelUI(subLevel, maxSubLevel);
     }
 }
