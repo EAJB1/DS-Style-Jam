@@ -534,7 +534,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -80, y: 50}
+  m_AnchoredPosition: {x: -80, y: 86}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &817373751
@@ -1341,7 +1341,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -90, y: 94}
+  m_AnchoredPosition: {x: -90, y: 130}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1564371082
@@ -1415,7 +1415,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 17.999998}
+  m_AnchoredPosition: {x: 0, y: 22}
   m_SizeDelta: {x: 224, y: 8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1565972044
@@ -1542,7 +1542,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -90, y: 72}
+  m_AnchoredPosition: {x: -90, y: 108}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1768506683
@@ -2054,17 +2054,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grid
       objectReference: {fileID: 0}
-    - target: {fileID: 2398629908482092897, guid: 92e90ae8f2af9a4489b8d204ff0e6975, type: 3}
-      propertyPath: mud
-      value: 
-      objectReference: {fileID: 5178725747034524473, guid: 8b528720a4958a74f9b26816ef841548, type: 3}
     - target: {fileID: 5476936406524230737, guid: 92e90ae8f2af9a4489b8d204ff0e6975, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5476936406524230737, guid: 92e90ae8f2af9a4489b8d204ff0e6975, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5
+      value: -6
       objectReference: {fileID: 0}
     - target: {fileID: 5476936406524230737, guid: 92e90ae8f2af9a4489b8d204ff0e6975, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2163,6 +2159,10 @@ PrefabInstance:
       propertyPath: gameUI
       value: 
       objectReference: {fileID: 2104834141}
+    - target: {fileID: 4860928941283497806, guid: fb5c1d768f9255b47995d0824c81b332, type: 3}
+      propertyPath: gridStartSize
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -39,7 +39,7 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        GameMaster.I.tilesFound = 0;
+        GameMaster.I.levelTilesFound = 0;
 
         mudGrid = GenerateGridLayer(mud.gameObject, false);
 

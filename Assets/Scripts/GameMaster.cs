@@ -10,23 +10,39 @@ public class GameMaster : MonoBehaviour
 
     [SerializeField] GridManager gridM;
     [SerializeField] GameplayUI gameUI;
+    GameOver gameOver;
 
     [Space]
 
     [SerializeField] int level;
     [SerializeField] int subLevel;
     [SerializeField] int maxSubLevel;
+    
+    [Space]
+
     public int startLives;
-    [HideInInspector] public int lives;
+    public int lives;
+    
+    [Space]
+    
     public int gridStartSize;
+    [SerializeField] int gridMaxSize;
     public float spawnPercent;
     [SerializeField] float spawnPercentIncrease;
     public float spawnPercentMin, spawnPercentMax;
-    [HideInInspector] public int tilesFound;
+    public int levelTilesFound;
+    public int totalTilesFound;
+
+    [Space]
+
+    public int seconds;
+    public int minutes;
+    float timer;
 
     private void Awake()
     {
         I = this;
+        DontDestroyOnLoad(I);
     }
 
     private void Start()
@@ -36,9 +52,16 @@ public class GameMaster : MonoBehaviour
         gridM.InitGrid();
     }
 
+    void Update()
+    {
+        timer += Time.deltaTime;
+        seconds = (int)timer % 60;
+        minutes = (int)timer / 60;
+    }
+
     public void CheckGameState(Tile tile)
     {
-        int bankedTilesFound = tilesFound;
+        int bankedTilesFound = levelTilesFound;
 
         // Correct tile
         for (int i = 0; i < gridM.nutGrid.Count; i++)
@@ -46,24 +69,24 @@ public class GameMaster : MonoBehaviour
             if (tile.coordinates.x == gridM.nutGrid[i].coordinates.x &&
                 tile.coordinates.y == gridM.nutGrid[i].coordinates.y)
             {
-                tilesFound++;
-                gameUI.SetAcornUI(tilesFound, gridM.ReturnSpawnCount());
+                levelTilesFound++;
+                gameUI.SetAcornUI(levelTilesFound, gridM.ReturnSpawnCount());
             }
         }
 
         // Incorrect tile
-        if (bankedTilesFound == tilesFound)
+        if (bankedTilesFound == levelTilesFound)
         {
             lives--;
             gameUI.SetLivesUI(lives);
 
             if (lives == 0)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                StartCoroutine(GameOver());
             }
         }
 
-        if (tilesFound == (gridM.ReturnSpawnCount()))
+        if (levelTilesFound == (gridM.ReturnSpawnCount()))
         {
             NextLevel();
         }
@@ -73,6 +96,9 @@ public class GameMaster : MonoBehaviour
     {
         level++;
         subLevel++;
+
+        totalTilesFound += levelTilesFound;
+
         spawnPercent += spawnPercentIncrease;
         spawnPercent = Mathf.Clamp(spawnPercent, spawnPercentMin, spawnPercentMax);
 
@@ -80,6 +106,8 @@ public class GameMaster : MonoBehaviour
         {
             subLevel = 1;
             gridM.size++;
+            gridM.size = Mathf.Clamp(gridM.size, gridStartSize, gridMaxSize);
+
             spawnPercent = spawnPercentMin;
         }
 
@@ -89,13 +117,31 @@ public class GameMaster : MonoBehaviour
 
     public void UpdateUI()
     {
-        tilesFound = 0;
-        gameUI.SetAcornUI(tilesFound, gridM.ReturnSpawnCount());
+        levelTilesFound = 0;
+        gameUI.SetAcornUI(levelTilesFound, gridM.ReturnSpawnCount());
 
         gameUI.SetLivesUI(lives);
 
         gameUI.SetLevelUI(level);
 
         gameUI.SetSubLevelUI(subLevel, maxSubLevel);
+    }
+
+    IEnumerator GameOver()
+    {
+        int sceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+
+        SceneManager.LoadScene(sceneIndex);
+
+        yield return null;
+
+        gameOver = FindObjectOfType<GameOver>();
+
+        if (gameOver != null)
+        {
+            gameOver.SetAcornUI(totalTilesFound);
+            gameOver.SetLevelUI(level);
+            gameOver.SetTimeUI(seconds, minutes);
+        }
     }
 }

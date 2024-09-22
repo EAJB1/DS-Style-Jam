@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78f5801058016fa44b41d6fd7ec5a2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mud: {fileID: 5178725747034524473, guid: 53122d2e6877b614d8b368e0670fbb8e, type: 3}
+  mud: {fileID: 5178725747034524473, guid: 8b528720a4958a74f9b26816ef841548, type: 3}
   nut: {fileID: 5090022337117832273, guid: 45b80132575ddef4499a2e0487dbcc79, type: 3}
   grass: {fileID: 3702270829505132192, guid: 59b8f8e63dcc43b439d79a00cbba4290, type: 3}
   padding: 0.375
