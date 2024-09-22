@@ -48,9 +48,12 @@ MonoBehaviour:
   gameUI: {fileID: 0}
   level: 1
   subLevel: 1
-  maxSubLevel: 2
+  maxSubLevel: 6
   startLives: 4
   lives: 0
   gridStartSize: 3
-  spawnPercent: 0.25
+  spawnPercent: 0
+  spawnPercentIncrease: 0.1
+  spawnPercentMin: 0.2
+  spawnPercentMax: 0.8
   tilesFound: 0

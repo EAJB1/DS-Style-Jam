@@ -1,54 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class MoveMenuUI : MonoBehaviour
 {
-    [SerializeField] Animator home, options;
-    [SerializeField] bool isHome, isOptions;
+    [SerializeField] Animator menu1, menu2;
+    [SerializeField] bool isMenu1, isMenu2;
     [SerializeField] float speed;
 
     AnimationEvent evt;
 
     private void Start()
     {
-        home.speed = speed;
-        options.speed = speed;
+        menu1.speed = speed;
+        menu2.speed = speed;
     }
 
     public void MovePost()
     {
         evt = new AnimationEvent();
 
-        if (isHome)
+        if (isMenu1)
         {
-            evt.objectReferenceParameter = home;
-            home.SetTrigger("Down");
+            evt.objectReferenceParameter = menu1;
+            menu1.SetTrigger("Down");
         }
-        else if (isOptions)
+        else if (isMenu2)
         {
-            evt.objectReferenceParameter = options;
-            options.SetTrigger("Down");
+            evt.objectReferenceParameter = menu2;
+            menu2.SetTrigger("Down");
         }
         
         evt.time = 1f;
         evt.functionName = "Move";
         
         AnimationClip clip;
-        clip = home.runtimeAnimatorController.animationClips[0];
+        clip = menu1.runtimeAnimatorController.animationClips[0];
         clip.AddEvent(evt);
     }
 
     public void Move()
     {
-        if (isHome)
+        if (isMenu1)
         {
-            options.SetTrigger("Up");
+            menu2.SetTrigger("Up");
         }
-        else if (isOptions)
+        else if (isMenu2)
         {
-            home.SetTrigger("Up");
+            menu1.SetTrigger("Up");
         }
     }
 }

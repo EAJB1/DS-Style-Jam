@@ -20,6 +20,8 @@ public class GameMaster : MonoBehaviour
     [HideInInspector] public int lives;
     public int gridStartSize;
     public float spawnPercent;
+    [SerializeField] float spawnPercentIncrease;
+    public float spawnPercentMin, spawnPercentMax;
     [HideInInspector] public int tilesFound;
 
     private void Awake()
@@ -30,6 +32,7 @@ public class GameMaster : MonoBehaviour
     private void Start()
     {
         gridM.size = gridStartSize;
+        spawnPercent = spawnPercentMin;
         gridM.InitGrid();
     }
 
@@ -70,11 +73,14 @@ public class GameMaster : MonoBehaviour
     {
         level++;
         subLevel++;
+        spawnPercent += spawnPercentIncrease;
+        spawnPercent = Mathf.Clamp(spawnPercent, spawnPercentMin, spawnPercentMax);
 
         if (subLevel > maxSubLevel)
         {
             subLevel = 1;
             gridM.size++;
+            spawnPercent = spawnPercentMin;
         }
 
         StartCoroutine(gridM.GridTransition(gridM.grassGrid));
