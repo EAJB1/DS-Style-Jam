@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1285185641596799235}
   - component: {fileID: 4860928941283497806}
+  - component: {fileID: 7165490336424578137}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: Untagged
@@ -44,16 +45,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78b5f1c13579b6f40b3f24070e035e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridM: {fileID: 0}
-  gameUI: {fileID: 0}
   level: 1
   subLevel: 1
   maxSubLevel: 6
   startLives: 4
   lives: 0
   gridStartSize: 3
+  gridMaxSize: 8
   spawnPercent: 0
   spawnPercentIncrease: 0.1
   spawnPercentMin: 0.2
   spawnPercentMax: 0.8
-  tilesFound: 0
+  levelTilesFound: 0
+  totalTilesFound: 0
+  seconds: 0
+  minutes: 0
+--- !u!114 &7165490336424578137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1422763959632737683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd44d128c2ad6bb4a99e5ae7d40e4fad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

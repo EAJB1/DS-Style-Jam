@@ -5,21 +5,32 @@ using UnityEngine;
 
 public class GameOver : MonoBehaviour
 {
+    [SerializeField] Score score;
+
+    [Space]
+    
     [SerializeField] TextMeshProUGUI acornText;
     [SerializeField] TextMeshProUGUI levelText;
     [SerializeField] TextMeshProUGUI timeText;
 
-    public void SetAcornUI(int count)
+    private void Start()
+    {
+        SetAcornUI(score.LoadIntScore(Score.ScoreName.Nut));
+        SetLevelUI(score.LoadIntScore(Score.ScoreName.Level));
+        SetTimeUI(score.LoadIntScore(Score.ScoreName.Seconds), score.LoadIntScore(Score.ScoreName.Minutes));
+    }
+
+    void SetAcornUI(int count)
     {
         acornText.text = "x" + count.ToString();
     }
 
-    public void SetLevelUI(int count)
+    void SetLevelUI(int count)
     {
         levelText.text = count.ToString();
     }
 
-    public void SetTimeUI(int sec, int min)
+    void SetTimeUI(int sec, int min)
     {
         timeText.text = min.ToString() + ":" + sec.ToString();
     }

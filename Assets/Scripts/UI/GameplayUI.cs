@@ -31,7 +31,7 @@ public class GameplayUI : MonoBehaviour
     Vector2 acornStartSize, livesStartSize, levelStartSize;
     IEnumerator coroutine;
 
-    private void Start()
+    public void InitText()
     {
         acornStartSize = acorn.sizeDelta;
         livesStartSize = lives.sizeDelta;

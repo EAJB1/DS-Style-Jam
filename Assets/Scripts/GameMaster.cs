@@ -1,18 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameMaster : MonoBehaviour
 {
-    public static GameMaster I;
+    public static GameMaster I = null;
 
-    [SerializeField] GridManager gridM;
-    [SerializeField] GameplayUI gameUI;
-    GameOver gameOver;
-
-    [Space]
+    GridManager gridM;
+    GameplayUI gameUI;
+    Score score;
 
     [SerializeField] int level;
     [SerializeField] int subLevel;
@@ -39,17 +38,41 @@ public class GameMaster : MonoBehaviour
     public int minutes;
     float timer;
 
+    bool canStartGame;
+
     private void Awake()
     {
-        I = this;
-        DontDestroyOnLoad(I);
+        if (I == null)
+        {
+            I = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
     {
-        gridM.size = gridStartSize;
-        spawnPercent = spawnPercentMin;
-        gridM.InitGrid();
+        canStartGame = true;
+        if (canStartGame)
+        {
+            gridM = FindObjectOfType<GridManager>();
+            gameUI = FindObjectOfType<GameplayUI>();
+            score = GetComponent<Score>();
+
+            if (gameUI != null)
+            {
+                gameUI.InitText();
+            }
+
+            if (gridM != null)
+            {
+                gridM.size = gridStartSize;
+                spawnPercent = spawnPercentMin;
+                gridM.InitGrid();
+            }
+        }
     }
 
     void Update()
@@ -82,7 +105,7 @@ public class GameMaster : MonoBehaviour
 
             if (lives == 0)
             {
-                StartCoroutine(GameOver());
+                GameOver();
             }
         }
 
@@ -127,21 +150,10 @@ public class GameMaster : MonoBehaviour
         gameUI.SetSubLevelUI(subLevel, maxSubLevel);
     }
 
-    IEnumerator GameOver()
+    void GameOver()
     {
-        int sceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-
-        SceneManager.LoadScene(sceneIndex);
-
-        yield return null;
-
-        gameOver = FindObjectOfType<GameOver>();
-
-        if (gameOver != null)
-        {
-            gameOver.SetAcornUI(totalTilesFound);
-            gameOver.SetLevelUI(level);
-            gameOver.SetTimeUI(seconds, minutes);
-        }
+        score.SaveScore(totalTilesFound, level, seconds, minutes);
+        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
